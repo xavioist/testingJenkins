@@ -1,20 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage('Deploy') {
-            steps {
-                timeout(time: 3, unit: 'MINUTES') {
-                    retry(5) {
-                        sh './flakey-deploy.sh'
-                    }
-                }
-            }
-        }
-    }
-}
-pipeline {
-    agent any
-    stages {
         stage('Build') {
             steps {
                 sh 'echo "Hello World"'
@@ -41,6 +27,20 @@ pipeline {
         changed {
             echo 'This will run only if the state of the Pipeline has changed'
             echo 'For example, if the Pipeline was previously failing but is now successful'
+        }
+    }
+}
+pipeline {
+    agent any
+    stages {
+        stage('Deploy') {
+            steps {
+                timeout(time: 3, unit: 'MINUTES') {
+                    retry(5) {
+                        sh 'echo "yeah boi"'
+                    }
+                }
+            }
         }
     }
 }
